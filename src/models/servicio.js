@@ -32,9 +32,9 @@ const servicioSchema = new Schema(
       },
     },
     categoria: {
-      type: String,
-      required: true,
-      enum: ["Desarrollo Web", "Backend & API", "Consultoría"],
+     type: Schema.Types.ObjectId,
+     ref: "categoria",
+     required: true,
     },
   },
   {
@@ -42,6 +42,6 @@ const servicioSchema = new Schema(
   },
 );
 
-const Servicio = mongoose.model('servicio', servicioSchema) 
+const Servicio = mongoose.model("servicio", servicioSchema) 
 
-export default Servicio
+export default Servicio;
