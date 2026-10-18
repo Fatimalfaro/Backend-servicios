@@ -47,8 +47,7 @@ export const buscarUsuarioPorID = async (req, res) => {
 export const registroUsuario = async (req, res) => {
   try {
     const { nombre, email, password, rol } = req.body;
-    //verificar si el mail ya existe
-    // const usuarioExistente = await Usuario.findOne({email: req.body.email})
+    
     const usuarioExistente = await Usuario.findOne({ email });
     if (usuarioExistente) {
       return res.status(409).json({ mensaje: "El email ya está registrado" });
@@ -63,6 +62,21 @@ export const registroUsuario = async (req, res) => {
     const tiempoExpiracion = new Date(Date.now() + 15 * 60 * 1000) // el tiempo configurado son 15 min
     console.log(codigoVerificacion);
     console.log(tiempoExpiracion);
+
+     const datosUsuario = {
+        nombre,
+        email,
+        password,
+        verificationCode: codigoVerificacion,
+        verificationExpires: tiempoExpiracion
+    }
+
+    if( rol && rol.trim() !== ""){
+        datosUsuario.rol = rol
+    }
+
+    const nuevoUsuario = await Usuario.create(datosUsuario)
+    
     
   } catch (error) {
     console.error(error);
