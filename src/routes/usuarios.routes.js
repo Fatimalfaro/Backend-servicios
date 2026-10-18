@@ -5,6 +5,6 @@ const router = Router();
 
 router.route('/').post(crearUsuario).get(listarUsuarios)
 router.route('/:id').get(buscarUsuarioPorID)
-router.route('/registro').post(registroUsuario)
+router.route('/registrar').post(registroUsuario)
 
 export default router
