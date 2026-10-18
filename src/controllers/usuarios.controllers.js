@@ -241,7 +241,7 @@ export const login = async (req, res) => {
         .json({ mensaje: "La cuenta aún no fue verificada." });
     }
     //generar y firmar el token
-    const token = jwt.sign({ id: usuarioBuscado._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: usuarioBuscado._id, rol: usuarioBuscado.rol }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
