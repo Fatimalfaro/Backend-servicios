@@ -41,6 +41,16 @@ const usuarioSchema = new Schema({
     enum: ["admin", "cliente"],
     default: 'cliente'
   },
+  isVerified:{
+    type: Boolean,
+    default: false
+  },
+  verificationCode:{
+    type: String //codigo de 6 digitos
+  },
+  verificationExpires:{
+    type: Date // fecha limite para validar el codigo
+  }
 },
 {
     timestamps:true
