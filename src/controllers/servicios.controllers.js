@@ -3,12 +3,6 @@ import Servicio from "../models/servicio.js";
 export const prueba = (req, res) => {
   const vehiculos = ["🏎️", "🚗", "🚕"];
 
-
-
-
-
-
-
   res.json({
     mensaje: "Bienvenidos a nuestro backend",
     vehiculos,
@@ -33,19 +27,31 @@ export const crearServicio = async (req, res) => {
 export const listarServicios = async (req, res) => {
   try {
     console.log(req.query);
-    const { termino } = req.query;
+    const { termino, pagina, limite } = req.query;
+    const numeroPagina = parseInt(pagina);
+    const cantServicios = parseInt(limite);
+
+    const salto = (numeroPagina - 1) * cantServicios;
+    console.log(salto);
+    //filtro por termino
     const query = {};
     //verificar si tenemos algun termino de busqueda
     if (termino) {
       query.nombreServicio = { $regex: termino, $options: "i" };
     }
 
+    const [servicios, cantidadServicios] = await Promise.all([
+      Servicio.find(query).populate("categoria", "nombre descripcion"),
+      Servicio.countDocuments(query)
+    ]);
+    // consultas individuales
+    // const servicios = await Servicio.find(query).populate(
+    //   "categoria",
+    //   "nombre descripcion",
+    // );
+    // const cantidadServicios = await Servicio.countDocuments(query)
 
-    const servicios = await Servicio.find(query).populate(
-      "categoria",
-      "nombre descripcion",
-    );
-    res.status(200).json(servicios);
+    res.status(200).json({ servicios, cantidadServicios });
   } catch (error) {
     console.error(error);
     res
@@ -68,11 +74,11 @@ export const buscarServicioPorID = async (req, res) => {
     res.status(200).json(servicioBuscado);
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({
-        mensaje: "Ocurrio un error al intentar buscar un servicio por id",
-      });
+    res.status(500).json({
+      mensaje: "Ocurrio un error al intentar buscar un servicio por id",
+    });
+
+
   }
 };
 export const borrarServicioPorID = async (req, res) => {
@@ -86,11 +92,11 @@ export const borrarServicioPorID = async (req, res) => {
     res.status(200).json({ mensaje: "El servicio se elimino correctamente" });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({
-        mensaje: "Ocurrio un error al intentar eliminar un servicio por id",
-      });
+    res.status(500).json({
+      mensaje: "Ocurrio un error al intentar eliminar un servicio por id",
+    });
+
+
   }
 };
 export const editarServicioPorID = async (req, res) => {
@@ -105,18 +111,18 @@ export const editarServicioPorID = async (req, res) => {
         .status(404)
         .json({ mensaje: "No se encontro un servicio con el id enviado" });
     }
-    res
-      .status(200)
-      .json({
-        mensaje: "El servicio se actualizo correctamente",
-        servicio: servicioEditado,
-      });
+    res.status(200).json({
+      mensaje: "El servicio se actualizo correctamente",
+      servicio: servicioEditado,
+    });
+
+
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({
-        mensaje: "Ocurrio un error al intentar editar un servicio por id",
-      });
+    res.status(500).json({
+      mensaje: "Ocurrio un error al intentar editar un servicio por id",
+    });
+
+
   }
 };
