@@ -5,16 +5,6 @@ export const authenticate = (req, res, next) => {
   try {
     const token = req.cookies.token;
 
-
-
-
-
-
-
-
-
-
-
     if (!token) {
       return res
         .status(401)
@@ -24,7 +14,7 @@ export const authenticate = (req, res, next) => {
     }
     //verificar el token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decoded);
+  
     //guardar la respuesta en la peticion
     req.user = decoded;
     next();
