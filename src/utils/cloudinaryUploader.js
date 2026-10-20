@@ -10,7 +10,7 @@ const subirImagenACloudinary = (buffer)=>{
     return new Promise((resolve, reject)=>{
         // 1. Iniciamos el Stream de carga especificando la carpeta de destino en Cloudinary
         // El segundo parámetro es una función callback que se ejecutará al terminar el proceso
-        const stream = cloudinary.uploader.upload_stream({ folder: 'servicio-c22'}, (error, result)=>{
+        const stream = cloudinary.uploader.upload_stream({ folder: 'servicios-programacion'}, (error, result)=>{
             if(result){
                 // Si Cloudinary procesa con éxito la imagen, resolvemos la promesa devolviendo el objeto resultado
                 resolve(result)
