@@ -5,7 +5,7 @@ import { authenticate, isAdmin } from "../middlewares/authenticator.js";
 const router = Router();
 
 router.route('/').post(crearUsuario).get([authenticate, isAdmin], listarUsuarios)//ruta privada
-router.route('/:id').get(buscarUsuarioPorID)
+
 router.route('/registrar').post(registroUsuario)
 router.route('/verificar').post(confirmarCodigoVerificacion)
 router.route('/reenviar-codigo').post(solicitarNuevoCodigo)
@@ -14,5 +14,7 @@ router.route('/logout').post(authenticate, logout)
 //ruta privada
 router.route('/perfil').get(authenticate, obtenerPerfil)
 router.route('/:id').get(buscarUsuarioPorID)
+
+
 
 export default router

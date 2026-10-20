@@ -4,8 +4,7 @@ import { authenticate } from "../middlewares/authenticator.js";
 
 const router = Router();
 
-router
-  .route("/crear-preferencia").post(authenticate,crearPreferenciaPago)
-  .route("/webhook").post(recibirWebhook);
+router.route("/crear-preferencia").post(authenticate,crearPreferenciaPago)
+router.route("/webhook").post(recibirWebhook);
 
   export default router;
