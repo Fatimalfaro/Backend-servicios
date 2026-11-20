@@ -33,6 +33,6 @@ router
     [authenticate, isAdmin,upload.single('imagen'), errorMulter , validacionIDServicio, validacionServicio],
     editarServicioPorID,
   )//ruta privada
-  .patch([validacionIDServicio, validacionPatchServicio], editarServicioPorID);
+  .patch([authenticate, isAdmin, validacionIDServicio, validacionPatchServicio], editarServicioPorID);
 
 export default router;
