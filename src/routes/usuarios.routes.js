@@ -13,7 +13,7 @@ router.route('/login').post(login)
 router.route('/logout').post(authenticate, logout)
 //ruta privada
 router.route('/perfil').get(authenticate, obtenerPerfil)
-router.route('/:id').get(buscarUsuarioPorID)
+router.route('/:id').get(authenticate, isAdmin, buscarUsuarioPorID)
 
 
 

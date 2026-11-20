@@ -30,18 +30,21 @@ export const listarUsuarios = async (req, res) => {
 
 export const buscarUsuarioPorID = async (req, res) => {
   try {
-    const usuarioBuscado = await Usuario.findById(req.params.id);
+    const usuarioBuscado = await Usuario.findById(req.params.id)
+      .select("nombre email rol isVerified createdAt updatedAt");
+
     if (!usuarioBuscado) {
-      return res
-        .status(404)
-        .json({ mensaje: "No se encontro un usuario con el id enviado" });
+      return res.status(404).json({
+        mensaje: "No se encontro un usuario con el id enviado",
+      });
     }
+
     res.status(200).json(usuarioBuscado);
   } catch (error) {
     console.error(error);
     res.status(500).json({
-        mensaje: "Ocurrio un error al intentar buscar un usuario por id",
-      });
+      mensaje: "Ocurrio un error al intentar buscar un usuario por id",
+    });
   }
 };
 
